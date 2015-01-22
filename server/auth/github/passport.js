@@ -1,15 +1,15 @@
 exports.setup = function (User, config) {
   var passport = require('passport');
-  var TwitterStrategy = require('passport-twitter').Strategy;
+  var GitHubStrategy = require('passport-github').Strategy;
 
-  passport.use(new TwitterStrategy({
-    consumerKey: config.twitter.clientID,
-    consumerSecret: config.twitter.clientSecret,
-    callbackURL: config.twitter.callbackURL
-  },
-  function(token, tokenSecret, profile, done) {
+  passport.use(new GitHubStrategy({
+      clientID: config.github.clientID,
+      clientSecret: config.github.clientSecret,
+      callbackURL: config.github.callbackURL
+    },
+    function(token, tokenSecret, profile, done) {
     User.findOne({
-      'twitter.id_str': profile.id
+      'github.id_str': profile.id
     }, function(err, user) {
       if (err) {
         return done(err);
@@ -19,8 +19,8 @@ exports.setup = function (User, config) {
           name: profile.displayName,
           username: profile.username,
           role: 'user',
-          provider: 'twitter',
-          twitter: profile._json
+          provider: 'github',
+          github: profile._json
         });
         user.save(function(err) {
           if (err) return done(err);
