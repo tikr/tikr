@@ -17,28 +17,28 @@ Once the project moves into development, the press release can be used as a touc
  -->
  
 ## Heading ##
-  > Name the product in a way the reader (i.e. your target customers) will understand.
+  > tikr
 
 ## Sub-Heading ##
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+  > A new social network for developers and recruiters.
 
 ## Summary ##
-  > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+  > tikr streamlines the job search and recruiting process for developers by providing transparent and reliable information about what skills developers have, and what skills recruiters are looking for. Information is pulled from and verified by a user's github account, which is the only way for a developer to register. Recruiters register seperately. 
 
 ## Problem ##
-  > Describe the problem your product solves.
+  > There is a communication gap between software developers and recruiters
 
 ## Solution ##
-  > Describe how your product elegantly solves the problem.
+  > We take the best features from the most popular social networks and combine them to form a new network specifially geared towards developers and recruiters. Skills are verified by repositories on GitHub and data analytics are used to determine what tech has the greatest need for developers and what tech has the most available engineers.
 
 ## Quote from You ##
-  > A quote from a spokesperson in your company.
+  > We're excited to offer a great new platform to bridge the gap between developers and recruiters.
 
 ## How to Get Started ##
-  > Describe how easy it is to get started.
+  > Log in with Github!
 
 ## Customer Quote ##
-  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
+  >  "I use tikr to find the most in demand skills in software. It's awesome!"
 
 ## Closing and Call to Action ##
-  > Wrap it up and give pointers where the reader should go next.
+  > Visit tikr.io today and join the new up and coming community of developers.

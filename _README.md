@@ -4,9 +4,9 @@
 
 ## Team
 
-  - __Product Owner__: teamMember
-  - __Scrum Master__: teamMember
-  - __Development Team Members__: teamMember, teamMember
+  - __Product Owner__: Mike Staub (mikestaub)
+  - __Scrum Master__: Bryan Venable (bryanlvenable)
+  - __Development Team Members__: Mike (mikestaub), Bryan (bryanlvenable), Travis (teechap), Richard (rvbsanjose)
 
 ## Table of Contents
 
