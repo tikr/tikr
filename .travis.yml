@@ -8,3 +8,6 @@ before_script:
 services: mongodb
 notifications:
   slack: hr22-23:cj7Wc706h8pEu4BGApvLCuJc
+branches:
+  only:
+    - master
