@@ -11,15 +11,15 @@ var router = express.Router();
 
 router.get('/', auth.hasRole('admin'), controller.index);
 router.get('/me', auth.isAuthenticated(), controller.me);
-router.get('/:id', auth.isAuthenticated(), controller.show);
+// router.get('/:id', auth.isAuthenticated(), controller.show);
 
 // POST methods
 
-router.post('/', controller.create);
+// router.post('/', controller.create);
 
 
 // DELETE methods
 
-router.delete('/:id', auth.hasRole('admin'), controller.destroy);
+// router.delete('/:id', auth.hasRole('admin'), controller.destroy);
 
 module.exports = router;
