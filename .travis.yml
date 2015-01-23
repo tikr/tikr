@@ -24,6 +24,8 @@ after_success:
   - yes | heroku keys:add
   # Build
   - grunt build
+  - git config --global user.name "Travis CI"
+  - git config --global user.email "fakemail@abc.com"
   - grunt buildcontrol:heroku
 env:
   global:
