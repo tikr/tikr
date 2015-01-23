@@ -8,9 +8,24 @@ before_script:
 services: mongodb
 notifications:
   slack: hr22-23:cj7Wc706h8pEu4BGApvLCuJc
-after_success:
-  - grunt build
-  - grunt buildcontrol:heroku
+# only run tests on master branch
 only:
   branch:
     - master
+after_success:
+  # Turn off warnings about SSH keys:
+  - echo "Host heroku.com" >> ~/.ssh/config
+  - echo "   StrictHostKeyChecking no" >> ~/.ssh/config
+  - echo "   CheckHostIP no" >> ~/.ssh/config
+  - echo "   UserKnownHostsFile=/dev/null" >> ~/.ssh/config
+  # Clear your current Heroku SSH keys:
+  - heroku keys:clear
+  # Add a new SSH key to Heroku
+  - yes | heroku keys:add
+  # Build
+  - grunt build
+  - grunt buildcontrol:heroku
+env:
+  global:
+    secure: VUYUoqVDPAXLWJdYDCbw1oNjfOhVLTWYZvGnh/exr/6gFZMPA4s5MeJ7sbZbg44YtZXw4ZS28UlLl3648vptpDi4ByOx3wAmbcWfKDkEaV5IwUr/COocWbLobTx19UxfOIOw03QUstXES\
+xDj/YiyqvHiy61J2v1xlkoDH9FqG8M=
