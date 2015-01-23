@@ -9,8 +9,8 @@ services: mongodb
 notifications:
   slack: hr22-23:cj7Wc706h8pEu4BGApvLCuJc
 # only run tests on master branch
-only:
-  branch:
+branches:
+  only:
     - master
 after_success:
   # Turn off warnings about SSH keys:
@@ -24,8 +24,9 @@ after_success:
   - yes | heroku keys:add
   # Build
   - grunt build
+  - git config --global user.name "Travis CI"
+  - git config --global user.email "fakemail@abc.com"
   - grunt buildcontrol:heroku
 env:
   global:
-    secure: VUYUoqVDPAXLWJdYDCbw1oNjfOhVLTWYZvGnh/exr/6gFZMPA4s5MeJ7sbZbg44YtZXw4ZS28UlLl3648vptpDi4ByOx3wAmbcWfKDkEaV5IwUr/COocWbLobTx19UxfOIOw03QUstXES\
-xDj/YiyqvHiy61J2v1xlkoDH9FqG8M=
+    secure: VUYUoqVDPAXLWJdYDCbw1oNjfOhVLTWYZvGnh/exr/6gFZMPA4s5MeJ7sbZbg44YtZXw4ZS28UlLl3648vptpDi4ByOx3wAmbcWfKDkEaV5IwUr/COocWbLobTx19UxfOIOw03QUstXES\xDj/YiyqvHiy61J2v1xlkoDH9FqG8M=
