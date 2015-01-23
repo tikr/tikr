@@ -2,8 +2,6 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var crypto = require('crypto');
-var authTypes = ['github'];
 
 var MessageSchema = new Schema({
   to: { type: Schema.Types.ObjectId, required: true },

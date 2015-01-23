@@ -15,7 +15,7 @@ router.get('/me', auth.isAuthenticated(), controller.me);
 
 // POST methods
 
-// router.post('/', controller.create);
+router.post('/create', controller.create);
 
 
 // DELETE methods

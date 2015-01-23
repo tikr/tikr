@@ -1,11 +1,12 @@
 'use strict';
 
+var User = require('../user/user.model');
 var Message = require('./message.model');
 var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
 
-var validationError = function (req, err) {
+var validationError = function (res, err) {
   return res.status(422).json(err);
 };
 
@@ -17,6 +18,19 @@ exports.index = function (req, res) {
   Message.find({}, function (err, messages) {
     if (err) return res.status(500).json(err);
     res.status(200).json(messages);
+  });
+};
+
+/**
+ * Creates a new message
+ */
+exports.create = function (req, res, next) {
+  var newMessage = new Message(req.body);
+  newMessage.save(function (err, message) {
+    console.log('err', err, 'message', message);
+    if (err) return next(err);
+    if (!message) return res.send(401);
+    res.end();
   });
 };
 
