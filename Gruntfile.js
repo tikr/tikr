@@ -379,7 +379,7 @@ module.exports = function (grunt) {
       },
       heroku: {
         options: {
-          remote: 'heroku',
+          remote: 'git@heroku.com:greenfield-tikr.git',
           branch: 'master'
         }
       },
