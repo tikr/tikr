@@ -9,7 +9,7 @@ exports.setup = function (User, config) {
     },
     function(token, tokenSecret, profile, done) {
     User.findOne({
-      'github.id_str': profile.id
+      'github.id': profile.id
     }, function(err, user) {
       if (err) {
         return done(err);
