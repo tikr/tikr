@@ -1,16 +1,23 @@
 language: node_js
 node_js:
-  - '0.10'
-  - '0.11'
+- '0.10'
+- '0.11'
 before_script:
-  - npm install -g bower grunt-cli
-  - bower install
+- npm install -g bower grunt-cli
+- bower install
 services: mongodb
 notifications:
   slack: hr22-23:cj7Wc706h8pEu4BGApvLCuJc
 after_success:
-  - grunt build
-  - grunt buildcontrol:heroku
+- grunt build
+- grunt buildcontrol:heroku
 only:
   branch:
-    - master
+  - master
+deploy:
+  provider: heroku
+  api_key:
+    secure: VUYUoqVDPAXLWJdYDCbw1oNjfOhVLTWYZvGnh/exr/6gFZMPA4s5MeJ7sbZbg44YtZXw4ZS28UlLl3648vptpDi4ByOx3wAmbcWfKDkEaV5IwUr/COocWbLobTx19UxfOIOw03QUstXESxDj/YiyqvHiy61J2v1xlkoDH9FqG8M=
+  app: greenfield-tikr
+  on:
+    repo: tikr/tikr
