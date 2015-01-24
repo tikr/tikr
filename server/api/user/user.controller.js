@@ -80,6 +80,17 @@ exports.changePassword = function(req, res, next) {
 };
 
 /**
+ * Query for users
+ */
+exports.search = function(req, res, next) {
+  User.find(req.body, '-salt -hashedPassword', function(err, users) { // don't ever give out the password or salt
+    if (err) return next(err);
+    if (!users) return res.json(401);
+    res.json(users);
+  });
+};
+
+/**
  * Get my info
  */
 exports.me = function(req, res, next) {
