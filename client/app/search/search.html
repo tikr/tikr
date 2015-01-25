@@ -1,0 +1,9 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<h1>Search Users Page</h1>
+<button ng-click='fetchUsers()'>fetch users</button>
+<div ng-repeat='user in users'>
+   {{ user.name }}
+</div>
+
+

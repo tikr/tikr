@@ -17,6 +17,14 @@ angular.module('tikrApp')
         params: {
           id:'me'
         }
+      },
+      search: {
+        method: 'POST',
+        isArray: true,
+        params: {
+          id: 'me',
+          controller: 'search'
+        }
       }
 	  });
   });
