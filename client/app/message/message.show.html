@@ -1,0 +1,9 @@
+<button id="inbox-back" type="button" class="btn btn-default btn-sm" ui-sref="inbox.messages">
+  <span class="glyphicon glyphicon-backward" aria-hidden="true"></span> Back to Inbox
+</button>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{message.title}}</h3>
+  </div>
+  <div ng-bind-html="message.content" class="panel-body">{{message.content}}</div>
+</div>

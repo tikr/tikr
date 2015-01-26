@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('tikrApp')
-  .factory('Message', ['$http', '$q', '$location', 'Auth', function ($http, $q, $location, Auth) {
+  .factory('Message', ['$http', '$q', '$state', 'Auth', function ($http, $q, $state, Auth) {
 
     return {
 
@@ -9,31 +9,56 @@ angular.module('tikrApp')
        * Get the users messages
        *
        */
-      getMessages: function () {
+      inbox: function () {
 
         var deffered = $q.defer();
-        $http.get('/api/messages/me')
+        $http.get('/api/messages/inbox')
         .success(function (data) {
-          console.log('i got data');
+          deffered.resolve(data);
         })
+        .error(function (data) {
+          deffered.reject(data);
+        });
+
+        return deffered.promise;
+      },
+
+      /**
+       * Updates the properties on the message
+       */
+      update: function (message, property) {
+
+        var deffered = $q.defer();
+        $http.put('/api/messages/update', {
+          message: message,
+          property: property
+        })
+        .success(function () {
+          deffered.resolve(true);
+        })
+        .error(function () {
+          deffered.reject(false);
+        });
+
+        return deffered.promise;
+
       },
 
       /**
        * @param Object message JS Object of a new message to post
        * @return promise
        */
-      create: function (message) {
+      create: function (message, cb) {
 
-        var deffered = $q.defer();
         $http.post('/api/messages/create', message)
-        .success(function (data, status, headers, config) {
-          deffered.resolve(data);
+        .success(function () {
+          cb();
+          $state.transitionTo('inbox.messages');
         })
-        .error(function (data, status, headers, config) {
-          deffered.reject(data);
+        .error(function () {
+          $state.transitionTo('inbox.messages.create');
         });
 
-        return deffered.promise;
       }
 
     };
