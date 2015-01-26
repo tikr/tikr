@@ -10,12 +10,16 @@ var router = express.Router();
 // GET methods
 
 router.get('/', auth.hasRole('admin'), controller.index);
-router.get('/me', auth.isAuthenticated(), controller.me);
-// router.get('/:id', auth.isAuthenticated(), controller.show);
+router.get('/inbox', auth.isAuthenticated(), controller.inbox);
+router.get('/:id', auth.isAuthenticated(), controller.show);
 
 // POST methods
 
-router.post('/create', controller.create);
+router.post('/create', auth.isAuthenticated(), controller.create);
+
+// PUT methods
+
+router.put('/update', auth.isAuthenticated(), controller.update);
 
 
 // DELETE methods

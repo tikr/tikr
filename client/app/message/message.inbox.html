@@ -1,0 +1,25 @@
+<div
+  ng-repeat="message in messages"
+  ng-hide="$state.includes('inbox.messages.show') || $state.includes('inbox.messages.create')">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        <a ui-sref="inbox.messages.show({id: message._id})" ng-click="show(message)">{{message.title}}</a>
+        <span class="label label-danger" ng-if="!message.read">New</span>
+        <span
+          ng-if="!message.starred"
+          class="pull-right glyphicon glyphicon-star-empty"
+          aria-hidden="true"
+          ng-click="starred(message)">
+        </span>
+        <span
+          ng-if="message.starred"
+          class="pull-right glyphicon glyphicon-star"
+          aria-hidden="true">
+        </span>
+      </h3>
+    </div>
+    <div ng-bind-html="message.content.substr(0,100)" class="panel-body"></div>
+  </div>
+</div>
+<div ui-view></div>

@@ -22,34 +22,67 @@ exports.index = function (req, res) {
 };
 
 /**
+ * Updates the read property on the message
+ */
+exports.update = function (req, res, next) {
+  var message = req.body.message;
+  var property = req.body.property;
+  User.findOne({
+    _id: req.user._id
+  }, function (err, user) {
+    if (err) next(err);
+    Message.findOneAndUpdate({
+      _id: message._id
+    }, property, null, function (err, doc) {
+      if (err) next(err);
+      res.status(200).json(true);
+    });
+  });
+};
+
+/**
  * Creates a new message
  */
 exports.create = function (req, res, next) {
   var newMessage = new Message(req.body);
   newMessage.save(function (err, message) {
-    console.log('err', err, 'message', message);
     if (err) return next(err);
-    if (!message) return res.send(401);
-    res.end();
+    if (!message) return res.status(401).json(false);
+    res.status(200).json(true);
+  });
+};
+
+/**
+ * Get a specific message for a user
+ */
+exports.show = function (req, res, next) {
+  console.log('req.query', req.params);
+  User.findOne({
+    _id: req.user._id
+  }, function (err, user) {
+    Message.findOne({
+      _id: req.params.id
+    }, function (err, message) {
+      res.status(200).json(message);
+    });
   });
 };
 
 /**
 * Get a users messages
 */
-exports.me = function (req, res, next) {
-  var userId = req.user._id;
+exports.inbox = function (req, res, next) {
   User.findOne({
-    _id: userId
+    _id: req.user._id
   }, function (err, user) {
     if (err) return next(err);
     if (!user) return res.status(401).json();
     Message.find({
-      to: userId
+      to: req.user.github.id
     }, function (err, messages) {
       if (err) return next(err);
       if (!messages) return res.status(401).json();
-      res.status(200).json(messages);
+      res.json(messages);
     });
   });
 };
