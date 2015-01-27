@@ -1,7 +1,13 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<h1>Search Users Page</h1>
-<button ng-click='fetchUsers()'>fetch users</button>
+<div style='text-align: center;'>
+  <input type='radio' ng-model='hasAllSkills' ng-value='true'>has all skills</input>
+  <input type='radio' ng-model='hasAllSkills' ng-value='false'>has at least one of the following skills</input>
+  <br>
+  search by skills (comma seperated list)
+  <input type='text' ng-model='skills' ng-list></input>
+  <button ng-click='fetchUsers()'>search</button>
+<div>
 <div ng-repeat='user in users'>
    {{ user.name }}
 </div>

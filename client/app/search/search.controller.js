@@ -3,12 +3,14 @@
 angular.module('tikrApp')
   .controller('SearchCtrl', function ($scope, $http, $q, User) {
    $scope.users = [];
+   $scope.skills = [];
+   $scope.hasAllSkills = false;
 
    // returns a promise
    $scope.fetchUsers = function(){
      return $q(function(resolve, reject){
-       var filters = {};
-       $scope.users = User.search(filters);
+       $scope.users = User.search({'skills': $scope.skills, 
+                                   'hasAllSkills': $scope.hasAllSkills});
        if(!$scope.users){
         reject('failed')
        } else{
@@ -19,7 +21,6 @@ angular.module('tikrApp')
 
     $scope.fetchUsers()
     .then(function(users){
-      console.log('users', users)
     });
 
   });
