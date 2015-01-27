@@ -2,9 +2,14 @@
 
 angular.module('tikrApp')
   .controller('NavbarCtrl', function ($scope, $location, Auth) {
-    $scope.menu = [{
+    $scope.menu = [
+    {
       'title': 'Home',
       'link': '/'
+    },
+    {
+      'title': 'Search',
+      'link': '/search'
     }];
 
     $scope.isCollapsed = true;
