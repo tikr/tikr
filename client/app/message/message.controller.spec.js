@@ -3,7 +3,6 @@
 describe('Controller: MessageCtrl', function () {
 
   var scope;
-  var state;
   var messageService;
 
   // load controller views
@@ -38,8 +37,16 @@ describe('Controller: MessageCtrl', function () {
         return defer.promise;
       };
 
-      mockMessageService.show = function (message) {
-        
+      mockMessageService.update = function () {
+        var defer = $q.defer();
+        defer.resolve(true);
+        return defer.promise;
+      };
+
+      mockMessageService.create = function () {
+        var defer = $q.defer();
+        defer.resolve(true);
+        return defer.promise;
       };
     });
 
@@ -72,7 +79,43 @@ describe('Controller: MessageCtrl', function () {
   describe('#show', function () {
 
     it('displays the correct private message to the authenticated user', function () {
+      spyOn(messageService, 'update').andCallThrough();
+      var message = scope.messages[0];
+      scope.show(message);
+      scope.$digest();
+      expect(message.read).toEqual(true);
+      expect(messageService.update).toHaveBeenCalledWith(message, { read: true });
+    });
 
+  });
+
+  describe('#starred', function () {
+
+    it('starres the private message', function () {
+      spyOn(messageService, 'update').andCallThrough();
+      var message = scope.messages[0];
+      scope.starred(message);
+      scope.$digest();
+      expect(message.starred).toEqual(true);
+      expect(messageService.update).toHaveBeenCalledWith(message, { starred: true });
+    });
+
+  });
+
+  describe('#create', function () {
+
+    it('creates a new private message', function () {
+      spyOn(messageService, 'create').andCallThrough();
+      var message = {
+        to: 'someone',
+        from: 'somebody',
+        title: 'New title',
+        content: 'New content'
+      };
+      scope.create(message);
+      scope.$digest();
+      expect(scope.messages.length).toBe(4);
+      expect(messageService.create).toHaveBeenCalledWith(message);
     });
 
   });

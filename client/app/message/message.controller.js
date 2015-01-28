@@ -46,9 +46,9 @@ angular.module('tikrApp')
     $scope.create = function (newMessage) {
       messageService.create(newMessage).then(function () {
         $scope.messages.push(newMessage);
-        // $state.transitionTo('inbox.messages');
+        $state.transitionTo('inbox.messages');
       }, function () {
-        // $state.transitionTo('inbox.messages.create');
+        $state.transitionTo('inbox.messages.create');
       });
     };
 
