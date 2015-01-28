@@ -31,6 +31,7 @@ describe('Message Model', function () {
     message.should.have.property('title');
     message.should.have.property('content');
     message.should.have.property('read');
+    message.should.have.property('starred');
   })
 
   it('should begin with no messages', function (done) {
@@ -66,7 +67,14 @@ describe('Message Model', function () {
 
   it('should default to not being read', function (done) {
     message.save(function (err) {
-      // message.read.should.be.false;
+      message.read.should.be.false;
+      done();
+    });
+  });
+
+  it('should default to not being starred', function (done) {
+    message.save(function (err) {
+      message.starred.should.be.false;
       done();
     });
   });
