@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('tikrApp')
-  .controller('MessageCtrl', ['$scope', '$state', 'Auth', 'Message', function ($scope, $state, Auth, Message) {
+  .controller('MessageCtrl', ['$scope', '$state', 'messageService', function ($scope, $state, messageService) {
 
     /**
      * Set $state on the scope to access it in the views
@@ -12,7 +12,7 @@ angular.module('tikrApp')
      * Fetches a messages list that belongs to the authenticated user
      */
     $scope.inbox = function () {
-      Message.inbox().then(function (messages) {
+      messageService.inbox().then(function (messages) {
         $scope.messages = messages;
       });
     };
@@ -21,7 +21,7 @@ angular.module('tikrApp')
      * Fetches a message
      */
     $scope.show = function (message) {
-      Message.update(message, { read: true }).then(function (result) {
+      messageService.update(message, { read: true }).then(function (result) {
         if (result) {
           $scope.message = message;
           $scope.message.read = true;
@@ -33,8 +33,10 @@ angular.module('tikrApp')
      * Prioritizes the message for the user
      */
     $scope.starred = function (message) {
-      Message.update(message, { starred: true }).then(function (result) {
-        if (result) message.starred = true;
+      messageService.update(message, { starred: true }).then(function (result) {
+        if (result) {
+          message.starred = true;
+        }
       });
     };
 
@@ -42,15 +44,11 @@ angular.module('tikrApp')
      * Creates a new private message to a user
      */
     $scope.create = function (newMessage) {
-      var newMessage = {
-        to: Auth.getCurrentUser().github.id,
-        from: Auth.getCurrentUser().github.id,
-        title: newMessage.title,
-        content: newMessage.message.replace(/\n/g, '<br />')
-      };
-
-      Message.create(newMessage, function () {
+      messageService.create(newMessage).then(function () {
         $scope.messages.push(newMessage);
+        // $state.transitionTo('inbox.messages');
+      }, function () {
+        // $state.transitionTo('inbox.messages.create');
       });
     };
 
