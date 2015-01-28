@@ -19,7 +19,7 @@ describe('Controller: MainCtrl', function () {
       .respond(['HTML5 Boilerplate', 'AngularJS', 'Karma', 'Express']);
 
     scope = $rootScope.$new();
-    MainCtrl = $controller('MainCtrl', {
+    SkillsCtrl = $controller('SkillsCtrl', {
       $scope: scope
     });
   }));
