@@ -26,9 +26,11 @@ angular.module('tikrApp')
     $scope.profilePicSrc = '';
     $scope.getUserProfile = function(){
       var githubUsername = $stateParams.username;
+      var url = 'api/users/profiles/'+githubUsername;
+      console.log("THIS IS THE URL LINE 30", url);
       return $http({
         method: 'GET',
-        url: '/profiles/'+githubUsername
+        url: url
       }).
       success(function(data, status, headers, config) {
         console.log(data, "THIS IS THE USER PROFILE DATA");
