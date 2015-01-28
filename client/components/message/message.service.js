@@ -1,16 +1,14 @@
 'use strict';
 
 angular.module('tikrApp')
-  .factory('Message', ['$http', '$q', '$state', 'Auth', function ($http, $q, $state, Auth) {
+  .factory('apiService', ['$http', '$q', '$state', 'Auth', function ($http, $q, $state, Auth) {
 
     return {
 
       /**
        * Get the users messages
-       *
        */
       inbox: function () {
-
         var deffered = $q.defer();
         $http.get('/api/messages/inbox')
         .success(function (data) {
@@ -27,7 +25,6 @@ angular.module('tikrApp')
        * Updates the properties on the message
        */
       update: function (message, property) {
-
         var deffered = $q.defer();
         $http.put('/api/messages/update', {
           message: message,
@@ -41,24 +38,30 @@ angular.module('tikrApp')
         });
 
         return deffered.promise;
-
       },
 
       /**
        * @param Object message JS Object of a new message to post
        * @return promise
        */
-      create: function (message, cb) {
+      create: function (newMessage) {
+        var deffered = $q.defer();
+        var message = {
+          to: Auth.getCurrentUser().github.id,
+          from: Auth.getCurrentUser().github.id,
+          title: newMessage.title,
+          content: newMessage.message.replace(/\n/g, '<br />')
+        };
 
         $http.post('/api/messages/create', message)
         .success(function () {
-          cb();
-          $state.transitionTo('inbox.messages');
+          deffered.resolve();
         })
         .error(function () {
-          $state.transitionTo('inbox.messages.create');
+          deffered.reject();
         });
 
+        return deffered.promise;
       }
 
     };
