@@ -3,7 +3,7 @@ Note: This is a template copied from main
 */
 'use strict';
 
-describe('Controller: MainCtrl', function () {
+describe('Controller: SkillsCtrl', function () {
 
   // load the controller's module
   beforeEach(module('tikrApp'));
@@ -24,8 +24,8 @@ describe('Controller: MainCtrl', function () {
     });
   }));
 
-  it('should attach a list of things to the scope', function () {
-    $httpBackend.flush();
-    expect(scope.awesomeThings.length).toBe(4);
-  });
+  // it('should attach a list of things to the scope', function () {
+  //   $httpBackend.flush();
+  //   expect(scope.awesomeThings.length).toBe(4);
+  // });
 });
