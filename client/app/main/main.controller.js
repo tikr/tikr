@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('tikrApp')
-  .controller('MainCtrl', function ($scope, $http) {
+  .controller('MainCtrl', function ($scope, $http, $window) {
     $scope.awesomeThings = [];
 
     $http.get('/api/things').success(function(awesomeThings) {
@@ -14,6 +14,10 @@ angular.module('tikrApp')
       }
       $http.post('/api/things', { name: $scope.newThing });
       $scope.newThing = '';
+    };
+
+    $scope.loginOauth = function(provider) {
+      $window.location.href = '/auth/' + provider;
     };
 
     $scope.deleteThing = function(thing) {
