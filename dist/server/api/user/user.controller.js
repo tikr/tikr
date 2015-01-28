@@ -43,6 +43,7 @@ exports.show = function (req, res, next) {
   User.findById(userId, function (err, user) {
     if (err) return next(err);
     if (!user) return res.send(401);
+    console.log("LOGGING USER JSON", user);
     res.json(user.profile);
   });
 };
@@ -109,4 +110,22 @@ exports.me = function(req, res, next) {
  */
 exports.authCallback = function(req, res, next) {
   res.redirect('/');
+};
+
+exports.getUserProfile = function(req, res, next){
+  console.log(req.githubUsername, "THIS IS THE GITHUBUSERNAME from line 116");
+  User.find({'github.login': req.githubUsername},
+    '-salt -hashedPassword',
+    function(err, user){
+      if (err){
+        console.log("THERE WAS AN ERROR");
+        return next(err);
+      }
+      if (!user){
+        console.log("COULDNT FIND THAT USER");
+        return res.json(404)
+      }
+      console.log("THISIS THE USER DATA ON THE SERVER", user);
+      res.json(user);
+  });
 };
