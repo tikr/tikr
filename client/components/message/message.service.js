@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('tikrApp')
-  .factory('apiService', ['$http', '$q', '$state', 'Auth', function ($http, $q, $state, Auth) {
+  .factory('messageService', ['$http', '$q', '$state', 'Auth', function ($http, $q, $state, Auth) {
 
     return {
 
