@@ -124,8 +124,8 @@ exports.authCallback = function(req, res, next) {
 };
 
 exports.getUserProfile = function(req, res, next){
-  console.log(req.githubUsername, "THIS IS THE GITHUBUSERNAME from line 116");
-  User.find({'github.login': req.githubUsername},
+  console.log(req.params.githubUsername, "THIS IS THE GITHUBUSERNAME from line 116");
+  User.find({'github.login': req.params.githubUsername},
     '-salt -hashedPassword',
     function(err, user){
       if (err){
