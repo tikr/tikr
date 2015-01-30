@@ -8,7 +8,6 @@ exports.setup = function (User, config) {
       callbackURL: config.github.callbackURL
     },
     function(token, tokenSecret, profile, done) {
-      console.log('test', profile.id, profile)
     User.findOne({
       'github.id': profile.id
     }, function(err, user) {
@@ -16,7 +15,6 @@ exports.setup = function (User, config) {
         return done(err);
       }
       if (!user) {
-        console.log('cant find')
         user = new User({
           name: profile.displayName,
           username: profile.username,
@@ -29,7 +27,6 @@ exports.setup = function (User, config) {
           return done(err, user);
         });
       } else {
-        console.log('done', user)
         return done(err, user);
       }
     });
