@@ -43,6 +43,7 @@ exports.show = function (req, res, next) {
   User.findById(userId, function (err, user) {
     if (err) return next(err);
     if (!user) return res.send(401);
+    console.log("LOGGING USER JSON", user);
     res.json(user.profile);
   });
 };
@@ -120,4 +121,37 @@ exports.me = function(req, res, next) {
  */
 exports.authCallback = function(req, res, next) {
   res.redirect('/');
+};
+
+exports.getUserProfile = function(req, res, next){
+
+  User.findOne({'github.login': req.params.githubUsername},
+    '-salt -hashedPassword',
+    function(err, user){
+      if (err){
+        return next(err);
+      }
+      if (!user){
+        return res.send('Could not find that profile', 404);
+      }
+      //console.log("THISIS THE USER DATA ON THE SERVER", user);
+      res.json(user);
+  });
+};
+
+exports.postNewSkill = function(req, res, next){
+  //TODO verify that user authorized to add a skill on server side
+
+  User.findOneAndUpdate(
+    {'github.login': req.params.githubUsername},
+    {$push: {skills: req.body}},
+    {safe: true},
+    function(err, user){ //user is the full updated user document (a js object)
+      if (err) {
+        res.send(500);
+      } else {
+        res.json(user);
+      }
+    }
+  );
 };
