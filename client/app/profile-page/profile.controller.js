@@ -22,46 +22,73 @@ angular.module('tikrApp')
       $http.delete('/api/things/' + thing._id);
     };
     */
-    $scope.userProfile = {};
-    $scope.profilePicSrc = '';
+    //$scope.userProfile = {};
+    $scope.currentUsername = $stateParams.username;
+    $scope.showFormToAddSkills = false;
     $scope.getUserProfile = function(){
       var githubUsername = $stateParams.username;
       var url = 'api/users/profiles/'+githubUsername;
-      console.log("THIS IS THE URL LINE 30", url);
+
       return $http({
         method: 'GET',
         url: url
       }).
-      success(function(data, status, headers, config) {
-        console.log(data, "THIS IS THE USER PROFILE DATA");
-        $scope.profilePicSrc = '';
-        return $scope.userProfile = data;
+      success(function(profile/*, status, headers, config*/) {
+        $scope.userProfile = profile;
+        return;
       }).
-      error(function(data, status, headers, config) {
-        console.log("There has been an error", data);
+      error(function(data, status/*headers, config*/) {
+        console.log('There has been an error', data);
+
         return data;
       });
-    }
+    };
+
+    $scope.isLoggedInAsCurrentUser = function(){
+      var currentUserPage = $stateParams.username;
+      var loggedInUser = Auth.getCurrentUser();
+      //console.log(loggedInUser);
+      if (loggedInUser.github && loggedInUser.github.login){
+        //console.log("LOGGING LINE 51", loggedInUser.github.login, currentUserPage);
+        if (loggedInUser.github.login === currentUserPage){
+          return true;
+        }
+      }
+      return false;
+    };
+
+    $scope.showAddSkillsForm = function(){
+      $scope.showFormToAddSkills = true;
+    };
+
+    $scope.addASkill = function(formdata){
+      $scope.showFormToAddSkills = false;
+      var newSkillName = $scope.skillname;
+      var newSkillLink = $scope.githublink;
+      //console.log(formdata);
+      if (formdata.$valid){
+        //submit POST request to server to add a skill to the current user's profile
+        var githubUsername = $stateParams.username;
+        var url = 'api/users/profiles/'+githubUsername;
+
+        $http.post(url, {skillname: newSkillName, githublink: newSkillLink}).
+        success(function(profile/*status, headers, config*/) {
+          $scope.userProfile = profile;
+        }).
+        error(function(data, status, headers, config) {
+          console.log("Error adding skill", data, status);
+        });
+      }
+    };
+
     $scope.getUserProfile();
 
-    /*
-    $scope.isEditable = function(){
-      //check if profile page user is currently viewing is theirs. If so, we'll show "edit" buttons to edit profile fields.
-      var isCurrentUser = Auth.getCurrentUser().github === undefined ? false: Auth.getCurrentUser().github.login === $stateParams.username ? true: false;
-      return isCurrentUser;
+    $scope.hasSkills = function(){
+      if ($scope.userProfile && $scope.userProfile.skills){
+        return true;
+      } else {
+        return false;
+      }
     };
-    */
-    /*
-    $http.get('/api/profiles/'+$stateParams.username)
-      .success(function(data, status, headers) {
-        //authToken = headers('A-Token');
-        $scope.user = data;
-        $scope.username = data.username;
-      })
-      .error(function(data, status, headers, config){
-        if (status === 404){
-          //$location.path("/404page");
-        }
-      });
-    */
+
   });

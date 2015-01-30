@@ -124,19 +124,34 @@ exports.authCallback = function(req, res, next) {
 };
 
 exports.getUserProfile = function(req, res, next){
-  console.log(req.params.githubUsername, "THIS IS THE GITHUBUSERNAME from line 116");
-  User.find({'github.login': req.params.githubUsername},
+
+  User.findOne({'github.login': req.params.githubUsername},
     '-salt -hashedPassword',
     function(err, user){
       if (err){
-        console.log("THERE WAS AN ERROR");
         return next(err);
       }
       if (!user){
-        console.log("COULDNT FIND THAT USER");
-        return res.json(404)
+        return res.send('Could not find that profile', 404);
       }
-      console.log("THISIS THE USER DATA ON THE SERVER", user);
+      //console.log("THISIS THE USER DATA ON THE SERVER", user);
       res.json(user);
   });
+};
+
+exports.postNewSkill = function(req, res, next){
+  //TODO verify that user authorized to add a skill on server side
+
+  User.findOneAndUpdate(
+    {'github.login': req.params.githubUsername},
+    {$push: {skills: req.body}},
+    {safe: true},
+    function(err, user){ //user is the full updated user document (a js object)
+      if (err) {
+        res.send(500);
+      } else {
+        res.json(user);
+      }
+    }
+  );
 };

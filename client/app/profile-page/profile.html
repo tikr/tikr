@@ -2,17 +2,51 @@
 
 <header class="hero-unit" id="banner">
   <div class="container">
-    <h1>Hello {{username}}!</h1>
+    <h1>{{'@'+userProfile.github.login}}</h1>
   </div>
 </header>
 
 <div class="container">
-    <img src="{{profilePicSrc}}">
+    <img id="profilePic" ng-src="{{userProfile.github.avatar_url}}">
+    <a class="btn btn-default" href="#" role="button">Send a Message</a>
   <div class="row">
     <div class="col-lg-12">
-      <h1 class="page-header">Skills</h1>
-      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="thing in awesomeThings">
-        <li><a href="#" tooltip="{{thing.info}}">{{thing.name}}</a></li>
+      <h1 ng-show="hasSkills()" class="page-header">Skills</h1>
+      <button ng-show="isLoggedInAsCurrentUser()" class="btn btn-default" ng-click="showAddSkillsForm()">Add a Skill</button>
+      <!--TODO: fix this behavior when user is not logged in -->
+      <h1 ng-show="!hasSkills() && isLoggedInAsCurrentUser" class="page-header">You haven't added any skills yet :-(</h1>
+      <h1 ng-show="!hasSkills() && !isLoggedInAsCurrentUser" class="page-header">{{currentUsername}} hasn't added any skills yet :-(</h1>
+
+      <form ng-show="showFormToAddSkills" class="form" name="form" ng-submit="addASkill(form)" novalidate>
+
+        <div class="form-group">
+          <label>Name of Skill</label>
+
+          <input type="text" name="skillname" ng-model="skillname" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+          <label>Github Link Demonstrating Your Skill</label>
+
+          <input type="url" name="githublink" ng-model="githublink" class="form-control" required>
+        </div>
+
+        <div class="form-group has-error">
+          <p class="help-block" ng-show="form.skillname.$error.required && form.githublink.$error.required && submitted">
+             Please enter a skill and a link to Github that shows it off.
+          </p>
+        </div>
+
+        <div>
+          <button class="btn btn-inverse btn-lg btn-login" type="submit">
+            Add Skill
+          </button>
+        </div>
+
+        <hr>
+      </form>
+      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="skill in userProfile.skills">
+        <li><a ng-href="{{skill.githublink}}">{{skill.skillname}}</a></li>
       </ul>
     </div>
   </div>

@@ -13,6 +13,14 @@
     letter-spacing: -1px;
 }
 
+#profilePic {
+    display: block;
+    max-width: 200px;
+    border-radius: 100px;
+    position: relative;
+    margin-top: -50px;
+}
+
 .hero-unit {
     position: relative;
     padding: 30px 15px;
