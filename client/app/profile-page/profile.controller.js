@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('tikrApp')
-  .controller('ProfileCtrl', function ($scope, $http, $stateParams, $location, Auth, User) {
+  .controller('ProfileCtrl', function ($scope, $http, $rootScope, $modal, messageService, $stateParams, $location, Auth, User) {
     /*
     //$scope.awesomeThings = [];
 
@@ -79,6 +79,52 @@ angular.module('tikrApp')
           console.log("Error adding skill", data, status);
         });
       }
+    };
+
+    $scope.sendMessage = function(title, text, userID){
+      var newMessage = {
+        userGithubID: userID,
+        title: title,
+        message: text
+      };
+      
+      messageService.create(newMessage).then(function () {
+        console.log('sent message');
+      }, function () {
+        console.log('failed to send message');
+      });
+    };
+
+    $scope.sendMessageModal = function(user){
+      var modalScope = $rootScope.$new();
+      modalScope.messageTitle = '';
+      modalScope.messageText = '';
+      var modalClass = 'modal-default';
+      modalScope.modal = {
+        dismissable: true,
+        title: 'Sending Message to: '+user.name,
+        buttons: [{
+          classes: 'btn-danger',
+          text: 'Send',
+          click: function(e) {
+            $scope.sendMessage(modalScope.messageTitle, modalScope.messageText, user.github.id);
+            $scope.messageModal.close(e);
+          }
+        }, {
+          classes: 'btn-default',
+          text: 'Cancel',
+          click: function(e) {
+            $scope.messageModal.dismiss(e);
+          }
+        }]
+      };
+
+      $scope.messageModal = $modal.open({
+        templateUrl: 'app/profile-page/messageDialog.html',
+        windowClass: modalClass,
+        scope: modalScope,
+        controller: 'ProfileCtrl'
+      });
     };
 
     $scope.getUserProfile();
