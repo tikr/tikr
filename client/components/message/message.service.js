@@ -30,8 +30,8 @@ angular.module('tikrApp')
           message: message,
           property: property
         })
-        .success(function () {
-          deffered.resolve(true);
+        .success(function (message) {
+          deffered.resolve(message);
         })
         .error(function () {
           deffered.reject(false);
@@ -54,11 +54,11 @@ angular.module('tikrApp')
         };
 
         $http.post('/api/messages/create', message)
-        .success(function () {
-          deffered.resolve();
+        .success(function (doc) {
+          deffered.resolve(doc);
         })
         .error(function () {
-          deffered.reject();
+          deffered.reject(false);
         });
 
         return deffered.promise;

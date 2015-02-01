@@ -35,7 +35,7 @@ exports.update = function (req, res, next) {
       _id: message._id
     }, property, null, function (err, doc) {
       if (err) next(err);
-      res.status(200).json(true);
+      res.status(200).json(doc);
     });
   });
 };
@@ -48,7 +48,7 @@ exports.create = function (req, res, next) {
   newMessage.save(function (err, message) {
     if (err) return next(err);
     if (!message) return res.status(401).json(false);
-    res.status(200).json(true);
+    res.status(200).json(message);
   });
 };
 

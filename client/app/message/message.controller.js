@@ -21,11 +21,9 @@ angular.module('tikrApp')
      * Fetches a message
      */
     $scope.show = function (message) {
-      messageService.update(message, { read: true }).then(function (result) {
-        if (result) {
-          $scope.message = message;
-          $scope.message.read = true;
-        }
+      messageService.update(message, { read: true }).then(function (doc) {
+        $scope.message = doc;
+        message.read = true;
       });
     };
 
@@ -33,10 +31,8 @@ angular.module('tikrApp')
      * Prioritizes the message for the user
      */
     $scope.starred = function (message) {
-      messageService.update(message, { starred: true }).then(function (result) {
-        if (result) {
-          message.starred = true;
-        }
+      messageService.update(message, { starred: true }).then(function (doc) {
+        message.starred = true;
       });
     };
 
@@ -44,8 +40,8 @@ angular.module('tikrApp')
      * Creates a new private message to a user
      */
     $scope.create = function (newMessage) {
-      messageService.create(newMessage).then(function () {
-        $scope.messages.push(newMessage);
+      messageService.create(newMessage).then(function (doc) {
+        $scope.messages.push(doc);
         $state.transitionTo('inbox.messages');
       }, function () {
         $state.transitionTo('inbox.messages.create');
