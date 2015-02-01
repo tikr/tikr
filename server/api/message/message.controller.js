@@ -48,7 +48,7 @@ exports.create = function (req, res, next) {
   newMessage.save(function (err, message) {
     if (err) return next(err);
     if (!message) return res.status(401).json(false);
-    res.status(200).json(true);
+    res.status(200).json(message);
   });
 };
 
