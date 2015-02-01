@@ -4,7 +4,7 @@ Note: This is a template copied from main
 'use strict';
 
 angular.module('tikrApp')
-  .controller('SkillsCtrl', function ($scope, $http) {
+  .controller('SkillsCtrl', function ($scope, $http, Auth) {
     $scope.awesomeThings = [];
 
     $http.get('/api/things').success(function(awesomeThings) {
