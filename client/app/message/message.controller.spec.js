@@ -39,7 +39,8 @@ describe('Controller: MessageCtrl', function () {
 
       mockMessageService.update = function () {
         var defer = $q.defer();
-        defer.resolve(true);
+        this.messages[0].read = true;
+        defer.resolve(this.messages[0]);
         return defer.promise;
       };
 

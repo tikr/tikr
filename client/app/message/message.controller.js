@@ -21,11 +21,8 @@ angular.module('tikrApp')
      * Fetches a message
      */
     $scope.show = function (message) {
-      messageService.update(message, { read: true }).then(function (result) {
-        if (result) {
-          $scope.message = message;
-          $scope.message.read = true;
-        }
+      messageService.update(message, { read: true }).then(function (data) {
+        $scope.message = data;
       });
     };
 

@@ -35,7 +35,7 @@ exports.update = function (req, res, next) {
       _id: message._id
     }, property, null, function (err, doc) {
       if (err) next(err);
-      res.status(200).json(true);
+      res.status(200).json(doc);
     });
   });
 };
