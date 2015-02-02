@@ -2,27 +2,8 @@
 
 angular.module('tikrApp')
   .controller('ProfileCtrl', function ($scope, $http, $rootScope, $modal, messageService, $stateParams, $location, Auth, User) {
-    /*
-    //$scope.awesomeThings = [];
 
-    //$http.get('/api/things').success(function(awesomeThings) {
-    //  $scope.awesomeThings = awesomeThings;
-    //});
-
-
-    $scope.addThing = function() {
-      if($scope.newThing === '') {
-        return;
-      }
-      $http.post('/api/things', { name: $scope.newThing });
-      $scope.newThing = '';
-    };
-
-    $scope.deleteThing = function(thing) {
-      $http.delete('/api/things/' + thing._id);
-    };
-    */
-    //$scope.userProfile = {};
+    $scope.languages = {};
     $scope.currentUsername = $stateParams.username;
     $scope.showFormToAddSkills = false;
     $scope.getUserProfile = function(){
@@ -35,6 +16,14 @@ angular.module('tikrApp')
       }).
       success(function(profile/*, status, headers, config*/) {
         $scope.userProfile = profile;
+        $scope.languages = profile.languages;
+        var totalBytes = _.reduce($scope.languages, function(totalBytes, bytes){
+          return totalBytes += bytes;
+        }, 0);
+        _.map($scope.languages, function(bytes, key){
+          var pct = (bytes / totalBytes * 100);
+          return $scope.languages[key] = [bytes, pct];
+        });
         return;
       }).
       error(function(data, status/*headers, config*/) {
