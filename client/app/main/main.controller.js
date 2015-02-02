@@ -1,12 +1,14 @@
 'use strict';
 
 angular.module('tikrApp')
-  .controller('MainCtrl', function ($scope, $http, $window) {
+  .controller('MainCtrl', function ($scope, $http, $window, Auth) {
     $scope.awesomeThings = [];
 
     $http.get('/api/things').success(function(awesomeThings) {
       $scope.awesomeThings = awesomeThings;
     });
+
+    $scope.isLoggedIn = Auth.isLoggedIn;
 
     $scope.addThing = function() {
       if($scope.newThing === '') {
