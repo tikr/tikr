@@ -5,7 +5,7 @@
     <h1>Welcome to tikr!</h1>
     <p class="lead">A social network by developers, for developers.</p>
     <div>
-      <a class="btn btn-github" style='background-color:black;'href="" ng-click="loginOauth('github')">
+      <a  ng-hide="isLoggedIn()" class="btn btn-github" style='background-color:black;'href="" ng-click="loginOauth('github')">
         <i class="fa fa-5x fa-github"></i> Connect with Github
       </a>
     </div>

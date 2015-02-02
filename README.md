@@ -31,6 +31,7 @@
 - etc
 
 ## Development
+<img src='https://travis-ci.org/tikr/tikr.svg?branch=master'>
 
 ### Installing Dependencies
 
