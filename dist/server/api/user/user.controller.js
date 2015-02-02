@@ -81,14 +81,25 @@ exports.changePassword = function(req, res, next) {
 };
 
 /**
- * Query for users
+ * Query for users by skills
  */
 exports.search = function(req, res, next) {
-  User.find(req.body, '-salt -hashedPassword', function(err, users) { // don't ever give out the password or salt
-    if (err) return next(err);
-    if (!users) return res.json(401);
-    res.json(users);
-  });
+  // return users who have all of the specified skills
+  if(req.body.hasAllSkills){
+    User.find({'skills': { $all: req.body.skills}}, '-salt -hashedPassword', 
+     function(err, users) {
+      if (err) return next(err);
+      if (!users) return res.json(401);
+      res.json(users);
+    });
+  } else { // return users who have at least one of the skills
+    User.find({'skills': { $in: req.body.skills }}, '-salt -hashedPassword', 
+     function(err, users) {
+      if (err) return next(err);
+      if (!users) return res.json(401);
+      res.json(users);
+    });
+  }
 };
 
 /**
