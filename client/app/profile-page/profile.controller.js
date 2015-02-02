@@ -39,7 +39,9 @@ angular.module('tikrApp')
       }).
       error(function(data, status/*headers, config*/) {
         console.log('There has been an error', data);
-
+        if (status === 404){
+          $location.path('/pagenotfound');
+        }
         return data;
       });
     };
