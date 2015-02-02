@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('tikrApp')
-  .controller('NavbarCtrl', function ($scope, $location, Auth) {
+  .controller('NavbarCtrl', function ($scope, $location, Auth, $stateParams, User) {
     $scope.menu = [
     {
       'title': 'Home',

@@ -3,6 +3,7 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 
-<div>
-  <h1>User's Skill Details:</h1>
+<div ng-controller="SkillsCtrl">
+  <div>
+  <h1>{{ getCurrentUser().name }}'s Skill Details:</h1>
 </div>

@@ -7,7 +7,7 @@ angular.module('tikrApp')
   .config(function ($stateProvider) {
     $stateProvider
       .state('skills', {
-        url: '/skills', // This will be of the form /profile/name/skills
+        url: '/skills', // This will be of the form /profile-name/skills
         templateUrl: 'app/skills/skills.html',
         controller: 'SkillsCtrl'
       });
