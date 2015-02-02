@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('tikrApp')
-  .controller('NavbarCtrl', function ($scope, $location, Auth) {
+  .controller('NavbarCtrl', function ($scope, $location, Auth, $stateParams, User) {
     $scope.menu = [
     {
       'title': 'Home',
@@ -12,8 +12,8 @@ angular.module('tikrApp')
       'link': '/search'
     },
     {
-      'title': 'My Profile',
-      'link': '/'
+      'title': 'Profile',
+      'link': '/profiles/' + Auth.getCurrentUser().github.login
     },
     {
       'title': 'Messages',
