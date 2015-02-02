@@ -10,14 +10,6 @@ angular.module('tikrApp')
     {
       'title': 'Search',
       'link': '/search'
-    },
-    {
-      'title': 'Profile',
-      'link': '/profiles/' + Auth.getCurrentUser().github.login
-    },
-    {
-      'title': 'Messages',
-      'link': '/messages'
     }];
 
     $scope.isCollapsed = true;
