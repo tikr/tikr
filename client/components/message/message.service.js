@@ -47,7 +47,7 @@ angular.module('tikrApp')
       create: function (newMessage) {
         var deffered = $q.defer();
         var message = {
-          to: Auth.getCurrentUser().github.id,
+          to: newMessage.githubID,
           from: Auth.getCurrentUser().github.id,
           title: newMessage.title,
           content: newMessage.message.replace(/\n/g, '<br />')
