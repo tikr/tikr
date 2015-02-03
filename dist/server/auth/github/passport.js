@@ -24,6 +24,7 @@ exports.setup = function (User, config) {
         });
         user.save(function(err) {
           if (err) return done(err);
+          user.getSkills(token);
           return done(err, user);
         });
       } else {

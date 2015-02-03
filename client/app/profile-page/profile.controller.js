@@ -24,6 +24,7 @@ angular.module('tikrApp')
           var pct = (bytes / totalBytes * 100);
           return $scope.languages[key] = [bytes, pct];
         });
+        $scope.setupChart();
         return;
       }).
       error(function(data, status/*headers, config*/) {
@@ -115,6 +116,26 @@ angular.module('tikrApp')
         windowClass: modalClass,
         scope: modalScope,
         controller: 'ProfileCtrl'
+      });
+    };
+    
+    $scope.setupChart = function(){
+      var data = [];
+      _.each($scope.languages, function(val, key){
+        data.push([key, val[1], 'test']);
+      });
+      
+      var chart = c3.generate({
+        data: {
+          columns: data,
+            type : 'donut',
+            onclick: function (d, i) { console.log("onclick", d, i); },
+            onmouseover: function (d, i) { console.log("onmouseover", d, i); },
+            onmouseout: function (d, i) { console.log("onmouseout", d, i); }
+        },
+        donut: {
+          title: "Languages"
+        }
       });
     };
 
