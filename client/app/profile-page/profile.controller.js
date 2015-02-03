@@ -24,7 +24,9 @@ angular.module('tikrApp')
           var pct = (bytes / totalBytes * 100);
           return $scope.languages[key] = [bytes, pct];
         });
+
         $scope.setupChart();
+
         return;
       }).
       error(function(data, status/*headers, config*/) {
@@ -79,7 +81,7 @@ angular.module('tikrApp')
         title: title,
         message: text
       };
-      
+
       messageService.create(newMessage).then(function () {
         console.log('sent message');
       }, function () {
@@ -118,13 +120,13 @@ angular.module('tikrApp')
         controller: 'ProfileCtrl'
       });
     };
-    
+
     $scope.setupChart = function(){
       var data = [];
       _.each($scope.languages, function(val, key){
         data.push([key, val[1], 'test']);
       });
-      
+
       var chart = c3.generate({
         data: {
           columns: data,

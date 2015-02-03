@@ -4,10 +4,6 @@ angular.module('tikrApp')
   .controller('NavbarCtrl', function ($scope, $location, Auth, $stateParams, User) {
     $scope.menu = [
     {
-      'title': 'Home',
-      'link': '/'
-    },
-    {
       'title': 'Search',
       'link': '/search'
     }];
